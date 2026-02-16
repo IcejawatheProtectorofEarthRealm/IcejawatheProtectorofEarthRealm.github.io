@@ -283,6 +283,7 @@ html, body, * { cursor: none !important; }
         <div style="display:flex;justify-content:center;margin-bottom:12px"><a class="join-btn" href="https://dsc.gg/nullsec" target="_blank" rel="noopener"> <span class="spark" aria-hidden="true"></span> Join NullSector Community</a></div>
         <div class="contact-details">
           <div>Business / Professional Enquiries: <a href="mailto:icejawa@atomicmail.io">icejawa@atomicmail.io</a></div>
+          <div>Github: <a href= "https://github.com/IcejawatheProtectorofEarthRealm"> </a></div>
           <div>Discord: <a href="https://dsc.gg/nullsec" target="_blank" rel="noopener">https://dsc.gg/nullsec</a></div>
           <div>Actively working at <strong>NullSector Community</strong></div>
         </div>
@@ -397,9 +398,9 @@ html, body, * { cursor: none !important; }
       terminalText.appendChild(node); terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight; }
     const commands = {
       help(){ return `Available commands:\nhelp — show this\nabout — short bio\nskills — list skills\ncontact — show contact details\nclear — clear terminal`; },
-      about(){ return `Elijah — Jr. Security Advisor at NullSec. I build practical Python tooling, support security operations, and bridge engineering with strategy.`; },
+      about(){ return `Elijah — Jr. Security Advisor and Marketing Specialist at NullSec. I build practical Python tooling, support security operations, and bridge engineering with strategy.`; },
       skills(){ return `Python\nMarketing\nBusiness Negotiations\nJr Ethical Hacking`; },
-      projects(){ return `Projects are not listed publicly. Use \"contact\" to request details.`; },
+      projects(){ return `Projects are not all listed publicly, but SILAS 1.2 is on my github. Use \"contact\" to request details.`; },
       contact(){ // show contact details and scroll to contact section
         const section = document.getElementById('contact'); if(section){ try{ section.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} }
         return `Business / Professional Enquiries: icejawa@atomicmail.io\nDiscord: https://dsc.gg/nullsec\nActively working at NullSector Community`;
