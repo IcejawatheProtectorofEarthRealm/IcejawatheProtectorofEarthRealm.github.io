@@ -11,6 +11,9 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Elijah","jobTitle":"Jr. Security Advisor and Marketing Specialist at NullSec","url":"http://localhost/","sameAs":[]}</script>
   <style>
 html, body { cursor: none; }
+    html, body, * { cursor: none !important; }
+
+html, body, * { cursor: none !important; }
 #cursor-skull{
   position: fixed;
   width: 48px;
@@ -19,6 +22,7 @@ html, body { cursor: none; }
   z-index: 9999;
   transform: translate(-50%, -50%);
 }
+
 
 
     
@@ -486,16 +490,33 @@ html, body { cursor: none; }
     // Global error handler: log uncaught errors
     window.addEventListener('error', (ev)=>{ try{ console.error('Uncaught error', ev.error || ev.message || ev); }catch(e){} });
   </script>
-   <img id="cursor-skull" src="skull.gif." alt="">
-    <script>
+
+
+    <img id="cursor-skull" src="skull.gif." alt="">
+
+<script>
   const skull = document.getElementById('cursor-skull');
   window.addEventListener('mousemove', (e) => {
     skull.style.left = e.clientX + 'px';
     skull.style.top = e.clientY + 'px';
   });
+</script>
 
-      <script>
+
+<img id="cursor-skull" src="skull.gif" alt="">
+
+<script>
 (() => {
+  const skull = document.getElementById('cursor-skull');
+  if (!skull) return;
+
+  // Skull follows mouse
+  window.addEventListener('mousemove', (e) => {
+    skull.style.left = e.clientX + 'px';
+    skull.style.top = e.clientY + 'px';
+  });
+
+  // Click burst canvas
   const c = document.createElement('canvas');
   c.style.position = 'fixed';
   c.style.inset = '0';
@@ -544,8 +565,7 @@ html, body { cursor: none; }
       p.x += p.vx;
       p.y += p.vy;
       p.vx *= 0.98;
-      p.vy *= 0.98;
-      p.vy += 0.03;
+      p.vy = p.vy * 0.98 + 0.03;
       p.life -= 1;
 
       if (p.life <= 0) {
@@ -563,6 +583,10 @@ html, body { cursor: none; }
   }
   tick();
 })();
+</script>
+
+
+
 </script>
 
 </script>
