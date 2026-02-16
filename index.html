@@ -386,13 +386,6 @@ html, body { cursor: none; }
     let countersStarted=false; const statEls = [];
 
 
-    <script>
-  const skull = document.getElementById('cursor-skull');
-  window.addEventListener('mousemove', (e) => {
-    skull.style.left = e.clientX + 'px';
-    skull.style.top = e.clientY + 'px';
-  });
-</script>
 
     // --- Terminal (improved) ---
     const terminalText = $('#terminal-text'); const terminalInput = $('#terminal-input'); const terminalSubmit = $('#terminal-submit');
@@ -496,6 +489,13 @@ html, body { cursor: none; }
     window.addEventListener('error', (ev)=>{ try{ console.error('Uncaught error', ev.error || ev.message || ev); }catch(e){} });
   </script>
    <img id="cursor-skull" src="skull.gif." alt="">
+    <script>
+  const skull = document.getElementById('cursor-skull');
+  window.addEventListener('mousemove', (e) => {
+    skull.style.left = e.clientX + 'px';
+    skull.style.top = e.clientY + 'px';
+  });
+</script>
 
 </body>
 </html>
