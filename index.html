@@ -20,6 +20,7 @@ html, body { cursor: none; }
   z-index: 9999;
   transform: translate(-50%, -50%);
 }
+html, body, * { cursor: none !important; }
 
 
 
@@ -495,6 +496,78 @@ html, body { cursor: none; }
     skull.style.left = e.clientX + 'px';
     skull.style.top = e.clientY + 'px';
   });
+
+      <script>
+(() => {
+  const c = document.createElement('canvas');
+  c.style.position = 'fixed';
+  c.style.inset = '0';
+  c.style.pointerEvents = 'none';
+  c.style.zIndex = '9998';
+  document.body.appendChild(c);
+
+  const ctx = c.getContext('2d');
+  let W = 0, H = 0;
+  const particles = [];
+
+  function resize() {
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    c.width = Math.floor(W * dpr);
+    c.height = Math.floor(H * dpr);
+    c.style.width = W + 'px';
+    c.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function burst(x, y) {
+    for (let i = 0; i < 36; i++) {
+      const a = (Math.PI * 2 * i) / 36 + (Math.random() - 0.5) * 0.3;
+      const s = 2 + Math.random() * 6;
+      particles.push({
+        x, y,
+        vx: Math.cos(a) * s,
+        vy: Math.sin(a) * s,
+        life: 28 + Math.random() * 18,
+        maxLife: 46,
+        r: 1.5 + Math.random() * 2.8
+      });
+    }
+  }
+
+  window.addEventListener('click', (e) => burst(e.clientX, e.clientY));
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 0.98;
+      p.vy *= 0.98;
+      p.vy += 0.03;
+      p.life -= 1;
+
+      if (p.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      const alpha = Math.max(0, p.life / p.maxLife);
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(155,48,255,${alpha})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+
 </script>
 
 </body>
