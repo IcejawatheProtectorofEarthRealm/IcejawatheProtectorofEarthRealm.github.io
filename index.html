@@ -23,6 +23,17 @@ html, body, * { cursor: none !important; }
   transform: translate(-50%, -50%);
 }
 
+.hero{position:relative;overflow:hidden}
+#matrix-hero{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+  opacity:.45;
+}
+.hero .hero-inner{position:relative;z-index:1}
 
 
     
@@ -166,6 +177,7 @@ html, body, * { cursor: none !important; }
 
   <main>
     <section id="hero" class="hero"><div class="hero-inner">
+      <canvas id="matrix-hero" aria-hidden="true"></canvas>
         <div class="logo-wrap">
           <!-- SVG logo, stroke draw animation -->
           <svg class="logo stroke-draw" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 8 L98 28 L98 68 C98 92 76 108 60 116 C44 108 22 92 22 68 L22 28 Z"/></svg>
@@ -593,6 +605,44 @@ html, body, * { cursor: none !important; }
     requestAnimationFrame(tick);
   }
   tick();
+})();
+</script>
+<script>
+(() => {
+  const c = document.getElementById('matrix-hero');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const chars = "01アイウエオカキクケコサシスセソ";
+  let cols = 0, drops = [], W = 0, H = 0, fs = 16;
+
+  function resize() {
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.floor(W / fs);
+    drops = Array.from({ length: cols }, () => Math.floor(Math.random() * H / fs));
+  }
+
+  function draw() {
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#9b30ff";
+    ctx.font = fs + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const ch = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * fs, y = drops[i] * fs;
+      ctx.fillText(ch, x, y);
+      if (y > H && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+  draw();
 })();
 </script>
 
